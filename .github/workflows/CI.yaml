@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+      - uses: php-actions/composer@v6
+      - run: echo "Composer dependencies have been installed."
+
+      - run: vendor/bin/phpunit
+
+      - run: ./bin/console lint:twig templates --env=prod
+        continue-on-error: true
+      - run: ./bin/console lint:yaml config --parse-tags
+        continue-on-error: true
+      - run: ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
+        continue-on-error: true
