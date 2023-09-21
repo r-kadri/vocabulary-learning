@@ -15,9 +15,9 @@ jobs:
 
       - run: vendor/bin/phpunit
 
-      - run: vendor/bin/lint:twig templates --env=prod
+      - run: ./bin/console lint:twig templates --env=prod
         continue-on-error: true
-      - run: vendor/bin/lint:yaml config --parse-tags
+      - run: ./bin/console lint:yaml config --parse-tags
         continue-on-error: true
       - run: ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
         continue-on-error: true
