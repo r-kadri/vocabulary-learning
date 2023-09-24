@@ -17,6 +17,13 @@ class GoalListTest extends TestCase
         $this->assertNull($goalList->getId());
     }
 
+    public function testGetName(): void
+    {
+        $goalList = new GoalList();
+        $goalList->setName('name');
+        $this->assertSame('name', $goalList->getName());
+    }
+
     public function testGetUser(): void
     {
         $user = new User();
