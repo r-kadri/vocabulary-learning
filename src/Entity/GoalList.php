@@ -10,10 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: GoalListRepository::class)]
 class GoalList
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    use Trait\IdNameTrait;
 
     #[ORM\ManyToOne(inversedBy: 'goalLists')]
     #[ORM\JoinColumn(nullable: false)]
@@ -29,11 +26,6 @@ class GoalList
     public function __construct()
     {
         $this->goals = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getUser(): ?User

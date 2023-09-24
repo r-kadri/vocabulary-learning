@@ -17,6 +17,13 @@ class WordListTest extends TestCase
         $this->assertNull($wordList->getId());
     }
 
+    public function testGetName(): void
+    {
+        $wordList = new WordList();
+        $wordList->setName('name');
+        $this->assertSame('name', $wordList->getName());
+    }
+
     public function testGetWords(): void
     {
         $wordList = new WordList();

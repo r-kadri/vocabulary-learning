@@ -15,11 +15,11 @@ class WordLevelTest extends TestCase
         $this->assertNull($wordLevel->getId());
     }
 
-    public function testGetLabel(): void
+    public function testGetName(): void
     {
         $wordLevel = new WordLevel();
-        $wordLevel->setLabel('Example Label');
-        $this->assertSame('Example Label', $wordLevel->getLabel());
+        $wordLevel->setName('Example Name');
+        $this->assertSame('Example Name', $wordLevel->getName());
     }
 
     public function testGetDescription(): void

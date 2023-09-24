@@ -10,10 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: WordListRepository::class)]
 class WordList
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    use Trait\IdNameTrait;
 
     #[ORM\OneToMany(mappedBy: 'list', targetEntity: Word::class)]
     private Collection $words;
@@ -29,11 +26,6 @@ class WordList
     public function __construct()
     {
         $this->words = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**
