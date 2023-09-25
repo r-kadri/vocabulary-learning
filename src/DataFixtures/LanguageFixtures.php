@@ -10,7 +10,19 @@ class LanguageFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $data = [
+        // Create entities from data array
+        foreach ($this->getLanguageData() as $name => $iso639) {
+            $language = new Language();
+            $language
+                ->setName($name)
+                ->setIso639($iso639);
+            $manager->persist($language);
+        }
+        $manager->flush();
+    }
+
+    private function getLanguageData(): array {
+        return [
             'French' => 'fr',
             'English' => 'en',
             'Spanish' => 'es',
@@ -26,15 +38,5 @@ class LanguageFixtures extends Fixture
             'Greek' => 'el',
             'Romanian' => 'ro'
         ];
-
-        foreach ($data as $name => $iso639) {
-            $language = new Language();
-            $language
-                ->setName($name)
-                ->setIso639($iso639);
-                
-            $manager->persist($language);
-        }
-        $manager->flush();
     }
 }
