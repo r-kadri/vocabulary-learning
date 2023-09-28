@@ -22,7 +22,7 @@ class GoalFixtures extends Fixture implements DependentFixtureInterface
             $goal = new Goal();
             $goal
                 ->setName($faker->word())
-                ->setIsDone($faker->randomNumber(1))
+                ->setIsDone($faker->boolean())
                 ->setGoalList($faker->randomElement($goalLists));
             $manager->persist($goal);
         }
