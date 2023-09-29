@@ -79,4 +79,9 @@ class Word
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return sprintf('%s (%s)', $this->getOriginal(), $this->getEnTranslation());
+    }
 }
