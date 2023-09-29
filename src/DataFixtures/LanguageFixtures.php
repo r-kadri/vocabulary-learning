@@ -8,6 +8,8 @@ use Doctrine\Persistence\ObjectManager;
 
 class LanguageFixtures extends Fixture
 {
+    public const LANGUAGE_ENGLISH_REFERENCE = 'language-english';
+
     public function load(ObjectManager $manager): void
     {
         // Create entities from data array
@@ -17,6 +19,7 @@ class LanguageFixtures extends Fixture
                 ->setName($name)
                 ->setIso639($iso639);
             $manager->persist($language);
+            if($iso639 === 'en') $this->addReference(self::LANGUAGE_ENGLISH_REFERENCE, $language);
         }
         $manager->flush();
     }
