@@ -1,1 +1,16 @@
+$primary: #2ecc71;
+$secondary: #44db5e;
+
+$text: #218d4e;
+$background: #ecf0f1;
+$secondary-background: #b6babd;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "text":       $text,
+  "background": $background,
+  "secondary-background": $secondary-background
+);
+  
 @import "~bootstrap/scss/bootstrap";
