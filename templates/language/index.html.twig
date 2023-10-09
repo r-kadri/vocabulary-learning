@@ -1,29 +1,32 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container pb-5">
-	<h1 class="display-6 mt-5 mb-5 fw-bold text-text">Manage languages from your list</h1>
-	<div class="list-group">
-		{% for language in languages %}
-			{% if app.user.getLanguages.contains(language) %}
-				<a
-                    href=""
-                    class="list-group-item list-group-item-action active"
-                    aria-current="true"
-                    onclick="return confirm('Remove {{language.name}} to your language list ?')"
-                >
-                    {{ language.name }}
-                </a>
-			{% else %}
-				<a 
-                    href="" 
-                    class="list-group-item list-group-item-action"
-                    onclick="return confirm('Add {{language.name}} to your language list ?')"
-                >
-                    {{ language.name }}
-                </a>
-			{% endif %}
-		{% endfor %}
+	<div class="container pb-5">
+		<h1 class="display-6 mt-5 mb-5 fw-bold text-text">Manage languages from your list</h1>
+		<div class="list-group">
+			{% for language in languages %}
+				{% if app.user.getLanguages.contains(language) %}
+					<form method="POST" action="{{ path('user_remove_language', {'id': language.id}) }}">
+						<input type="hidden" name="_method" value="DELETE">
+						<button
+                            type="submit"
+                            class="list-group-item list-group-item-action active"
+                        >
+							{{ language.name }}
+						</button>
+					</form>
+				{% else %}
+					<form method="POST" action="{{ path('user_add_language', {'id': language.id}) }}">
+						<input type="hidden" name="_method" value="POST">
+						<button
+                            type="submit"
+                            class="list-group-item list-group-item-action"
+                        >
+							{{ language.name }}
+						</button>
+					</form>
+				{% endif %}
+			{% endfor %}
+		</div>
 	</div>
-</div>
 {% endblock %}
