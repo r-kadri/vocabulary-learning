@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Language;
 use App\Entity\User;
 use App\Repository\LanguageRepository;
 use App\Service\WordListService;
@@ -25,20 +26,14 @@ class WordListController extends AbstractController
          * @var User $user
          */
         $user = $this->getUser();
-        $languageIso = $request->get('language');
-        if($languageIso === 'all') {
-            $wordLists = $this->wordListService->getAllLists($user);
-            $language = 'all';
-        } else {
-            $language = $this->languageRepository->findOneBy(['iso639' => $languageIso]);
-            $wordLists = $this->wordListService->getListsForLanguage($user, $language);
-        }
-
-        $language ?: $language = $this->wordListService->getUserFirstLanguage($user);
+        $language = $this->languageRepository->findOneBy(['iso639' => $request->get('language')]);
+        $language === null
+            ? $wordLists = $this->wordListService->getAllLists($user)
+            : $wordLists = $this->wordListService->getListsForLanguage($user, $language);
 
         return $this->render('word_list/index.html.twig', [
             'wordLists' => $wordLists,
-            'selectedLanguage' => $language
+            'currentLanguage' => $language,
         ]);
     }
 }

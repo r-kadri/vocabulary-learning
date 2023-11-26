@@ -38,6 +38,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $wordLists;
 
     #[ORM\ManyToMany(targetEntity: Language::class, inversedBy: 'users')]
+    #[ORM\OrderBy(['name' => 'ASC'])]
     private Collection $languages;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: GoalList::class)]
@@ -163,6 +164,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * Get all languages the user is learning
+     * 
      * @return Collection<int, Language>
      */
     public function getLanguages(): Collection

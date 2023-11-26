@@ -1,32 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}My lists
+{% block title %}
+	My lists
 {% endblock %}
 
 {% block body %}
 	<div class="container my-5">
 		<div class="col-12 text-center">
 			<h1 class="display-3 fw-bold mb-4 text-text">My Word Lists</h1>
-
-			<form method="GET" action="{{ path('word_list_index') }}" class="mb-4">
-				<div class="form-group">
-					<label for="languageFilter">Filter by Language:</label>
-					<select name="language" id="languageFilter" class="form-control-sm my-2">
-						<option value="all">All</option>
-						{% for language in app.user.getLanguages() %}
-							<option {{language == selectedLanguage ? 'selected' }} value="{{ language.getIso639() }}">{{ language }}
-							</option>
-						{% endfor %}
-					</select>
+			<div class="filter-box pb-5">
+				<h4>For which language ?</h3>
+				<div class="btn-group" role="group">
+					{% for language in app.user.getLanguages() %}
+						{% set isActive = currentLanguage is same as(language) %}
+						<a 
+							href="{{ path('word_list_index', {'language': language.getIso639()}) }}"
+							class="btn btn-secondary {% if isActive %}active{% endif %}"
+						>
+							{{ language.getName() }}
+						</a>
+					{% endfor %}
 				</div>
-				<button type="submit" class="btn btn-primary">Apply</button>
-			</form>
-
+			</div>
 		</div>
 		<div class="row">
 			{% if wordLists is empty %}
 				<div class="col-12 text-center">
-					<h2>You don't have any lists yet.</h2>
+					<h2>You don't have any lists yet for {{ currentLanguage }}.</h2>
 					<a href="" class="btn btn-primary mt-3">Create one now</a>
 				</div>
 			{% else %}
@@ -36,7 +36,7 @@
 							<div class="card-body">
 								<h5 class="card-title">{{ list.getName() }}</h5>
 								<p class="card-text">{{ list.getLanguage() }}
-									({{ list.getWords.count() }}
+									({{ list.getWords() | length }}
 									words)</p>
 								<a href="" class="btn btn-primary">See Words</a>
 							</div>
